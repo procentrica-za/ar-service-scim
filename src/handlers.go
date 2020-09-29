@@ -53,8 +53,8 @@ func (s *Server) verifycredentials() http.HandlerFunc {
 		if err != nil {
 			log.Fatal(err)
 		}
-		req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
-		req.Header.Add("Authorization", "Basic "+user.KeySecret)
+		//req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
+		//req.Header.Add("Authorization", "Basic "+user.KeySecret)
 		resp, err := client.Do(req)
 		if err != nil {
 			log.Fatal(err)
