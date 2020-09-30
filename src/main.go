@@ -16,6 +16,8 @@ func init() {
 	config = CreateConfig()
 	fmt.Printf("IS_Host: %v\n", config.ISHost)
 	fmt.Printf("IS_Port: %v\n", config.ISPort)
+	fmt.Printf("IS_Port: %v\n", config.ISUsername)
+	fmt.Printf("IS_Port: %v\n", config.ISPassword)
 	fmt.Printf("APIM_Host: %v\n", config.APIMHost)
 	fmt.Printf("APIM_Port: %v\n", config.APIMPort)
 	fmt.Printf("Listening and Serving on Port: %v\n", config.ListenServePort)

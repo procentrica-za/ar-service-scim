@@ -50,11 +50,12 @@ func (s *Server) verifycredentials() http.HandlerFunc {
 		data.Add("username", user.Username)
 		data.Add("password", user.Password)
 		req, err := http.NewRequest("POST", "https://"+config.APIMHost+":"+config.APIMPort+"/token", bytes.NewBufferString(data.Encode()))
+		req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
+		req.Header.Add("Authorization", "Basic "+user.KeySecret)
 		if err != nil {
 			log.Fatal(err)
 		}
-		req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
-		req.Header.Add("Authorization", "Basic "+"VkVWUVgzWnFqOGFCTmxxVTA1aUZZdjhaWm4wYTpIYmZRamlBa3E3UGRkbk5zZ3JreFVOb1ZwVnNh")
+
 		resp, err := client.Do(req)
 		if err != nil {
 			log.Fatal(err)
