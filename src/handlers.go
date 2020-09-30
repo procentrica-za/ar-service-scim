@@ -49,7 +49,7 @@ func (s *Server) verifycredentials() http.HandlerFunc {
 		data.Set("grant_type", "password")
 		data.Add("username", user.Username)
 		data.Add("password", user.Password)
-		req, err := http.NewRequest("POST", "https://"+config.APIMHost+":"+config.APIMPort+"/token", bytes.NewBufferString(data.Encode()))
+		req, err := http.NewRequest("POST", "https://"+config.APIMHost+"/token", bytes.NewBufferString(data.Encode()))
 		req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 		req.Header.Add("Authorization", "Basic "+user.KeySecret)
 		if err != nil {
