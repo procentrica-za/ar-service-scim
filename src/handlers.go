@@ -50,18 +50,21 @@ func (s *Server) verifycredentials() http.HandlerFunc {
 		data.Add("username", user.Username)
 		data.Add("password", user.Password)
 		req, err := http.NewRequest("POST", "https://"+config.APIMHost+"/token", bytes.NewBufferString(data.Encode()))
-		req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
-		req.Header.Add("Authorization", "Basic "+user.KeySecret)
+
 		if err != nil {
 			log.Fatal(err)
 		}
-
+		req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
+		req.Header.Add("Authorization", "Basic "+user.KeySecret)
 		resp, err := client.Do(req)
 		if err != nil {
 			log.Fatal(err)
 		}
 
 		if resp.StatusCode == 400 {
+			fmt.Println(resp.Header)
+			fmt.Println(resp.StatusCode)
+			fmt.Println(resp.Body)
 			invalidUser := UserResponse{}
 			invalidUser.Message = "Invalid user credentials for application / Invalid application authorization token."
 
