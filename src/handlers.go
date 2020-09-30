@@ -64,7 +64,11 @@ func (s *Server) verifycredentials() http.HandlerFunc {
 		if resp.StatusCode == 400 {
 			fmt.Println(resp.Header)
 			fmt.Println(resp.StatusCode)
-			fmt.Println(resp.Body)
+			btext, err := ioutil.ReadAll(resp.Body)
+			if err != nil {
+				log.Fatal(err)
+			}
+			fmt.Println(btext)
 			invalidUser := UserResponse{}
 			invalidUser.Message = "Invalid user credentials for application / Invalid application authorization token."
 
