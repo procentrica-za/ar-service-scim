@@ -62,7 +62,7 @@ func (s *Server) verifycredentials() http.HandlerFunc {
 
 		fmt.Println(data)
 
-		req, err := http.NewRequest("POST", "https://"+config.APIMHost+":8243/token", bytes.NewBufferString(data.Encode()))
+		req, err := http.NewRequest("POST", "https://"+config.APIMHost+"/token", bytes.NewBufferString(data.Encode()))
 
 		if err != nil {
 			log.Fatal(err)
@@ -165,7 +165,7 @@ func (s *Server) handleregisteruser() http.HandlerFunc {
 		//var data = strings.NewReader(`{"schemas":[],"name":{"familyName":"` + regUser.Surname + `" ,"givenName":"` + regUser.Name + `"},"userName":"` + regUser.Username + `","password":"` + regUser.Password + `","emails":[{"primary":true,"value":"` + regUser.Email + `","type":"home"},{"value":"` + regUser.Email + `","type":"work"}]}`)
 		var data = strings.NewReader(`{"schemas":[],"name":{"familyName":"` + regUser.Surname + `" ,"givenName":"` + regUser.Name + `"},"userName":"` + regUser.Username + `","password":"` + regUser.Password + `","emails":[{"primary":true,"value":"` + regUser.Email + `","type":"home"},{"value":"` + regUser.Email + `","type":"work"}]}`)
 
-		req, err := http.NewRequest("POST", "https://"+config.ISHost+":9445/wso2/scim/Users", data)
+		req, err := http.NewRequest("POST", "https://"+config.ISHost+"/wso2/scim/Users", data)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -336,7 +336,7 @@ func (s *Server) handleassigngroup() http.HandlerFunc {
 
 		client := &http.Client{}
 		//var data = strings.NewReader(`{"schemas":[],"name":{"familyName":"` + regUser.Surname + `" ,"givenName":"` + regUser.Name + `"},"userName":"` + regUser.Username + `","password":"` + regUser.Password + `","emails":[{"primary":true,"value":"` + regUser.Email + `","type":"home"},{"value":"` + regUser.Email + `","type":"work"}]}`)
-		req, err := http.NewRequest("GET", "https://"+config.ISHost+":9445/wso2/scim/Users?filter=userName+Eq+%22"+getUsername+"%22", nil)
+		req, err := http.NewRequest("GET", "https://"+config.ISHost+"/wso2/scim/Users?filter=userName+Eq+%22"+getUsername+"%22", nil)
 		//req, respErr := http.Get("https://" + config.ISHost + ":9445/wso2/scim/Users?filter=userName+Eq+%22" + getUsername + "%22")
 
 		if err != nil {
@@ -360,7 +360,7 @@ func (s *Server) handleassigngroup() http.HandlerFunc {
 
 		err = json.Unmarshal(bodyText, &userResponse)
 
-		req, err = http.NewRequest("GET", "https://"+config.ISHost+":9445/wso2/scim/Groups?filter=displayName+Eq+%22"+getGroupName+"%22", nil)
+		req, err = http.NewRequest("GET", "https://"+config.ISHost+"/wso2/scim/Groups?filter=displayName+Eq+%22"+getGroupName+"%22", nil)
 
 		if err != nil {
 			log.Fatal(err)
@@ -388,7 +388,7 @@ func (s *Server) handleassigngroup() http.HandlerFunc {
 
 		var data = strings.NewReader(`{"displayName": "` + groupResponse.Resources[0].DisplayName + `","members":[{"value":"` + userResponse.Resources[0].ID + `","display": "` + userResponse.Resources[0].Username + `"}]}`)
 		fmt.Println(data)
-		req, err = http.NewRequest("PATCH", "https://"+config.ISHost+":9445/wso2/scim/Groups/"+groupResponse.Resources[0].ID, data)
+		req, err = http.NewRequest("PATCH", "https://"+config.ISHost+"/wso2/scim/Groups/"+groupResponse.Resources[0].ID, data)
 
 		if err != nil {
 			log.Fatal(err)
